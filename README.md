@@ -252,10 +252,53 @@ The `"serial_path"` filepath on a macOS system might resemble <file>"/dev/ttyUSB
   }
 ```
 
+## Configure your rtk-dual-gps movement_sensor
+
+The `dual-gps-rtk` model of movement sensor calculates a compass heading from two GPS movement sensors, and returns the midpoint position between the first and second GPS devices as its position.
+
 > [!NOTE]
-> How you connect your device to an NTRIP server varies by geographic region.
-You will need to research the options available to you.
-If you are not sure where to start, check out this [GPS-RTK2 Hookup Guide from SparkFun](https://learn.sparkfun.com/tutorials/gps-rtk2-hookup-guide/connecting-the-zed-f9p-to-a-correction-source).
+> Before configuring your movement_sensor, you must [create a machine](https://docs.viam.com/cloud/machines/#add-a-new-machine).
+
+Navigate to the [**CONFIGURE** tab](https://docs.viam.com/configure/) of your [machine](https://docs.viam.com/fleet/machines/) in the [Viam app](https://app.viam.com/).
+[Add movement_sensor / gps:MODEL to your machine](https://docs.viam.com/configure/#components).
+
+On the new component panel, copy and paste the following attribute template into your movement_sensor's attributes field:
+
+```json
+{
+  "first_gps": "<name-of-your-first-gps-movement-sensor>",
+  "second_gps": "<name-of-your-second-gps-movement-sensor>",
+  "offset_degrees": <int>
+}
+```
+
+### Attributes
+
+The following attributes are available for `viam:gps:rtk-dual-gps` movement_sensors:
+
+| Attribute | Type | Required? | Description |
+| --------- | ---- | --------- | ----------  |
+| `first_gps` | int | **Required** | The name you have configured for the first movement sensor you want to combine the measurements from. Must be a GPS model. |
+| `second_gps` | string | **Required** | The name you have configured for the second movement sensor you want to combine the measurements from. Must be a GPS model. |
+| `offset_degrees` | int | Optional | The value to offset the compass heading calculation between the two GPS devices based on their positions on the base. Calculate this as the degrees between the vector from `first_gps` to `second_gps` and the vector from the vehicle's back to the vehicle's front, counterclockwise. {{< imgproc src="/components/movement-sensor/offset_degrees.png" alt="Rand's diagram of 3 offset degree calculations." resize="600x" >}} <br> Default: `90` |
+
+## Example configuration
+
+### `viam:gps:rtk-dual-gps`
+```json
+  {
+      "name": "<your-gps-rtk-dual-gps-movement_sensor-name>",
+      "model": "viam:gps:rtk-dual-gps",
+      "type": "movement_sensor",
+      "namespace": "rdk",
+      "attributes": {
+        "first_gps": "gps-1",
+        "second_gps": "gps-2",
+        "offset_degrees": 90
+      },
+      "depends_on": []
+  }
+```
 
 ## Next Steps
 - To test your movement_sensor, expand the **TEST** section of its configuration pane or go to the [**CONTROL** tab](https://docs.viam.com/fleet/control/).
