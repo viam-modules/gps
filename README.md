@@ -143,6 +143,120 @@ The following attributes are available for `viam:gps:rtk-pmtk` movement_sensors:
 You will need to research the options available to you.
 If you are not sure where to start, check out this [GPS-RTK2 Hookup Guide from SparkFun](https://learn.sparkfun.com/tutorials/gps-rtk2-hookup-guide/connecting-the-zed-f9p-to-a-correction-source).
 
+## Configure your nmea movement_sensor
+
+The `gps-nmea` movement sensor model supports [NMEA-based](https://en.wikipedia.org/wiki/NMEA_0183) GPS units and RTCM versions up to 3.3.
+
+This GPS model uses communication standards set by the National Marine Electronics Association (NMEA).
+The `gps-nmea` model can be connected using USB and send data through a serial connection to any device, or employ an I<sup>2</sup>C connection to a board.
+
+> [!NOTE]
+> Before configuring your movement_sensor, you must [create a machine](https://docs.viam.com/cloud/machines/#add-a-new-machine).
+
+Navigate to the [**CONFIGURE** tab](https://docs.viam.com/configure/) of your [machine](https://docs.viam.com/fleet/machines/) in the [Viam app](https://app.viam.com/).
+[Add movement_sensor / gps:MODEL to your machine](https://docs.viam.com/configure/#components).
+
+On the new component panel, copy and paste the following attribute template into your movement_sensor's attributes field:
+
+```json
+{
+  "connection_type": "<serial|I2C>",
+  "serial_attributes": {
+    "serial_path": "<your-device-path>",
+    "serial_baud_rate": <int>
+  },
+  "i2c_attributes": {
+      "i2c_bus": "<index-of-bus-on-board>",
+      "i2c_addr": <int>,
+      "i2c_baud_rate": <int>
+  }
+}
+```
+
+### Attributes
+
+The following attributes are available for `viam:gps:nmea` movement_sensors:
+
+| Attribute | Type | Required? | Description |
+| --------- | ---- | --------- | ----------  |
+| `connection_type` | string  | **Required** | `"I2C"` or `"serial"`. See [Connection Attributes](#connection-attributes) below. |
+
+### Connection attributes
+
+You need to configure attributes to specify how the GPS connects to your computer.
+You can use either serial communication (over USB) or I<sup>2</sup>C communication (through pins to a [board](https://docs.viam.com/components/board/)).
+
+Use `connection_type` to specify `"serial"` or `"I2C"` connection in the main `attributes` config.
+Then create a struct within `attributes` for either `serial_attributes` or `i2c_attributes`, respectively.
+
+### Serial config attributes
+
+For a movement sensor communicating over serial, you'll need to include a `serial_attributes` struct containing:
+
+<!-- prettier-ignore -->
+| Name               | Type   | Required? | Description  |
+| ------------------ | ------ | --------- | ------------ |
+| `serial_path` | string | **Required** | The full filesystem path to the serial device, starting with <file>/dev/</file>. To find your serial device path, first connect the serial device to your machine, then:<ul><li>On Linux, run <code>ls /dev/serial/by-path/\*</code> to show connected serial devices, or look for your device in the output of <code>sudo dmesg \| grep tty</code>. Example: <code>"/dev/serial/by-path/usb-0:1.1:1.0"</code>.</li><li>On macOS, run <code>ls /dev/tty\* \| grep -i usb</code> to show connected USB serial devices, <code>ls /dev/tty\*</code> to browse all devices, or look for your device in the output of <code>sudo dmesg \| grep tty</code>. Example: <code>"/dev/ttyS0"</code>.</li></ul> |
+| `serial_baud_rate` | int    | Optional     | The rate at which data is sent from the sensor. <br> Default: `38400` |
+
+### I2C config attributes
+
+For a movement sensor communicating over I<sup>2</sup>C, you'll need a `i2c_attributes` struct containing:
+
+<!-- prettier-ignore -->
+| Name            | Type   | Required? | Description |
+| --------------- | ------ | --------- | ----------- |
+| `i2c_bus`       | string | **Required** | The index of the I<sup>2</sup>C bus on the board wired to the sensor. |
+| `i2c_addr`      | int    | **Required** | The device's I<sup>2</sup>C address. |
+| `i2c_baud_rate` | int    | Optional     | The rate at which data is sent from the sensor. Optional. <br> Default: `38400` |
+
+## Example configurations
+
+### `viam:gps:nmea` serial connection
+```json
+  {
+      "name": "<your-gps-nmea-movement_sensor-name>",
+      "model": "viam:gps:nmea",
+      "type": "movement_sensor",
+      "namespace": "rdk",
+      "attributes": {
+        "connection_type": "serial",
+        "serial_attributes": {
+          "serial_path": "/dev/serial/by-path/usb-0:1.1:1.0",
+          "serial_baud_rate": 38400
+        }
+      },
+      "depends_on": []
+  }
+```
+
+The `"serial_path"` filepath used in this example is specific to serial devices connected to Linux systems.
+The `"serial_path"` filepath on a macOS system might resemble <file>"/dev/ttyUSB0"</file> or <file>"/dev/ttyS0"</file>.
+
+### `viam:gps:nmea` i2c connection
+```json
+  {
+      "name": "<your-gps-nmea-movement_sensor-name>",
+      "model": "viam:gps:nmea",
+      "type": "movement_sensor",
+      "namespace": "rdk",
+      "attributes": {
+        "connection_type": "I2C",
+        "i2c_attributes": {
+          "i2c_bus": "1",
+          "i2c_addr": 111,
+          "i2c_baud_rate": 38400
+        }
+      },
+      "depends_on": []
+  }
+```
+
+> [!NOTE]
+> How you connect your device to an NTRIP server varies by geographic region.
+You will need to research the options available to you.
+If you are not sure where to start, check out this [GPS-RTK2 Hookup Guide from SparkFun](https://learn.sparkfun.com/tutorials/gps-rtk2-hookup-guide/connecting-the-zed-f9p-to-a-correction-source).
+
 ## Next Steps
 - To test your movement_sensor, expand the **TEST** section of its configuration pane or go to the [**CONTROL** tab](https://docs.viam.com/fleet/control/).
 - To write code against your movement_sensor, use one of the [available SDKs](https://docs.viam.com/sdks/).
