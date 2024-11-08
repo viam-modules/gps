@@ -1,0 +1,15 @@
+name: Build and Publish Latest
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ 'main' ]
+    paths-ignore:
+      - 'README.md'
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml

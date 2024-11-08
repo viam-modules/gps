@@ -1,0 +1,55 @@
+name: Test
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build_and_test:
+    strategy:
+       matrix:
+        include:
+          - arch: buildjet-8vcpu-ubuntu-2204
+            image: ghcr.io/viamrobotics/rdk-devenv:amd64-cache
+            platform: linux/amd64
+            label: amd64
+          - arch: buildjet-8vcpu-ubuntu-2204-arm
+            image: ghcr.io/viamrobotics/rdk-devenv:arm64-cache
+            platform: linux/arm64
+            label: arm64
+    runs-on: ${{ matrix.arch }}
+    container:
+      image: ${{ matrix.image }}
+    timeout-minutes: 45
+    steps:
+
+    - name: Check out main branch code
+      if: github.event_name != 'pull_request_target'
+      uses: actions/checkout@v3
+
+    - name: Check out PR branch code
+      if: github.event_name == 'pull_request_target'
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: apt update
+      run: |
+        apt-get update
+
+    - name: Verify no uncommitted changes from make lint
+      run: |
+        git init
+        git add .
+        chown -R testbot:testbot .
+        sudo -u testbot bash -lc 'make lint'
+
+        if [ -n "$GEN_DIFF" ]; then
+            echo '"make lint" resulted in changes not in git' 1>&2
+            git status
+            exit 1
+        fi
+
+    - name: make build
+      run: |
+        sudo -u testbot bash -lc 'make build'

@@ -1,0 +1,60 @@
+name: Build and Publish RC
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+# To test workflow updates you need to work in a branch directly on viamrobotics/viam-cartographer
+# and tag your working branch instead of @main in any viamrobotics/viam-cartographer "uses" below.
+# Don't forget to tag back to @main before merge.
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  publish:
+    strategy:
+      matrix:
+        include:
+          - arch: buildjet-8vcpu-ubuntu-2204
+            image: ghcr.io/viamrobotics/rdk-devenv:amd64-cache
+            platform: linux/amd64
+            label: amd64
+          - arch: buildjet-8vcpu-ubuntu-2204-arm
+            image: ghcr.io/viamrobotics/rdk-devenv:arm64-cache
+            platform: linux/arm64
+            label: arm64
+
+    runs-on: ${{ matrix.arch }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.23
+
+    - name: Install canon
+      run: |
+        export PATH="$(go env GOPATH)/bin:$PATH"
+        go install github.com/viamrobotics/canon@v1.0.0
+
+    - name: Build and package
+      run: |
+        canon --profile MODULE
+        TARGET_OS=${{ matrix.platform }} TARGET_ARCH=${{ matrix.arch }} make module
+
+    - name: Upload MODULE module to registry
+      uses: viamrobotics/upload-module@main
+      with:
+        meta-path: meta.json
+        module-path: bin/module.tar.gz
+        platform: ${{ matrix.platform }}
+        version: ${{ github.ref_name }}
+        key-id: ${{ secrets.VIAM_DEV_API_KEY_ID }}
+        key-value: ${{ secrets.VIAM_DEV_API_KEY }}

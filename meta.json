@@ -1,0 +1,14 @@
+{
+  "$schema": "https://dl.viam.dev/module.schema.json",
+  "module_id": "viam:gps",
+  "visibility": "private",
+  "url": "",
+  "description": "",
+  "models": [
+    {
+      "api": "",
+      "model": ""
+    }
+  ],
+  "entrypoint": ""
+}

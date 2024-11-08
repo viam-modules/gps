@@ -1,0 +1,21 @@
+name: Pull Request Update
+
+concurrency:
+  group: pullrequest-${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request_target:
+    branches: [ main ]
+    types: [ labeled ]
+
+jobs:
+  test:
+    if: (github.event.label.name == 'safe to test' || github.event.label.name == 'appimage')
+    uses: viam-modules/MODULE/.github/workflows/test.yml@main
+    secrets:
+      MONGODB_TEST_OUTPUT_URI: ${{ secrets.MONGODB_TEST_OUTPUT_URI }}
+      DOCKER_PUBLIC_READONLY_PAT: ${{ secrets.DOCKER_PUBLIC_READONLY_PAT }}
+
+  license_finder:
+    uses: viam-modules/MODULE/.github/workflows/license_finder.yml@main
