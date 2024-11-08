@@ -4,13 +4,18 @@ package main
 import (
 	"context"
 
+	"gps/nmea"
+	"gps/rtk"
+	dualgps "gps/rtk-dual-gps"
+
+	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/module"
 	"go.viam.com/utils"
 )
 
 func main() {
-	utils.ContextualMain(mainWithArgs, module.NewLoggerFromArgs("MODULE"))
+	utils.ContextualMain(mainWithArgs, module.NewLoggerFromArgs("gps"))
 }
 
 func mainWithArgs(ctx context.Context, args []string, logger logging.Logger) error {
@@ -19,7 +24,19 @@ func mainWithArgs(ctx context.Context, args []string, logger logging.Logger) err
 		return err
 	}
 
-	if err = module.AddModelFromRegistry(ctx, COMPONENT.API, MODEL.Model); err != nil {
+	if err = module.AddModelFromRegistry(ctx, movementsensor.API, rtk.ModelSerial); err != nil {
+		return err
+	}
+
+	if err = module.AddModelFromRegistry(ctx, movementsensor.API, rtk.ModelPmtk); err != nil {
+		return err
+	}
+
+	if err = module.AddModelFromRegistry(ctx, movementsensor.API, nmea.Model); err != nil {
+		return err
+	}
+
+	if err = module.AddModelFromRegistry(ctx, movementsensor.API, dualgps.Model); err != nil {
 		return err
 	}
 

@@ -1,14 +1,31 @@
 {
   "$schema": "https://dl.viam.dev/module.schema.json",
   "module_id": "viam:gps",
-  "visibility": "private",
-  "url": "",
-  "description": "",
+  "visibility": "public",
+  "url": "https://github.com/viam-modules/gps",
+  "description": "Go module for gps rtk-serial, rtk-pmtk, nmea, and rtk-dual-gps movement_sensors, compatible with Viam. Note: the darwin/arm64 build is not compatible with the rtk-pmtk model.",
   "models": [
     {
-      "api": "",
-      "model": ""
+      "api": "rdk:component:movement_sensor",
+      "model": "viam:gps:rtk-serial"
+    },
+    {
+      "api": "rdk:component:movement_sensor",
+      "model": "viam:gps:rtk-pmtk"
+    },
+    {
+      "api": "rdk:component:movement_sensor",
+      "model": "viam:gps:nmea"
+    },
+    {
+      "api": "rdk:component:movement_sensor",
+      "model": "viam:gps:rtk-dual-gps"
     }
   ],
-  "entrypoint": ""
+  "build": {
+    "build": "make module",
+    "path": "bin/module.tar.gz",
+    "arch" : ["linux/arm64", "linux/amd64", "darwin/arm64"]
+  },
+  "entrypoint": "bin/gps"
 }
