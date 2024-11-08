@@ -10,9 +10,8 @@ import (
 	"io"
 
 	"github.com/jacobsa/go-serial/serial"
-	"go.viam.com/utils"
-
 	"go.viam.com/rdk/logging"
+	"go.viam.com/utils"
 )
 
 // SerialDataReader implements the DataReader interface (defined in component.go) by interacting

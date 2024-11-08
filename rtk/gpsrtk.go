@@ -26,13 +26,12 @@ import (
 	"github.com/go-gnss/rtcm/rtcm3"
 	"github.com/golang/geo/r3"
 	geo "github.com/kellydunn/golang-geo"
-	"go.viam.com/utils"
-
 	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/components/movementsensor/gpsutils"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/resource"
 	"go.viam.com/rdk/spatialmath"
+	"go.viam.com/utils"
 )
 
 // gpsrtk is an nmea movementsensor model that can intake RTK correction data.

@@ -6,9 +6,8 @@ package rtk
 import (
 	"testing"
 
-	"go.viam.com/test"
-
 	"go.viam.com/rdk/resource"
+	"go.viam.com/test"
 )
 
 func TestValidatePMTKRTK(t *testing.T) {

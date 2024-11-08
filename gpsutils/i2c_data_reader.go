@@ -9,11 +9,10 @@ import (
 	"errors"
 	"fmt"
 
-	"go.viam.com/utils"
-
 	"go.viam.com/rdk/components/board/genericlinux/buses"
 	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/logging"
+	"go.viam.com/utils"
 )
 
 // PmtkI2cDataReader implements the DataReader interface for a PMTK device by communicating with it

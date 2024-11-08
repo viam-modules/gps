@@ -7,10 +7,9 @@ import (
 	"testing"
 
 	geo "github.com/kellydunn/golang-geo"
-	"go.viam.com/test"
-
 	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/logging"
+	"go.viam.com/test"
 )
 
 var loc = geo.NewPoint(90, 1)

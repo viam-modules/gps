@@ -13,9 +13,8 @@ import (
 	"strings"
 	"time"
 
-	goutils "go.viam.com/utils"
-
 	"go.viam.com/rdk/logging"
+	goutils "go.viam.com/utils"
 )
 
 const (

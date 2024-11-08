@@ -39,7 +39,6 @@ import (
 
 	slib "github.com/jacobsa/go-serial/serial"
 	"go.uber.org/multierr"
-
 	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/components/movementsensor/gpsutils"
 	"go.viam.com/rdk/logging"

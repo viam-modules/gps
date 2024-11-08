@@ -4,9 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"go.viam.com/test"
-
 	"go.viam.com/rdk/logging"
+	"go.viam.com/test"
 )
 
 func TestConnectInvalidURL(t *testing.T) {

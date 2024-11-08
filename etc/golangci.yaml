@@ -33,6 +33,7 @@ linters:
     - importas
     - interfacebloat
     - interfacer
+    - intrange
     - ireturn
     - maintidx
     - maligned

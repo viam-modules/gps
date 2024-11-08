@@ -4,13 +4,12 @@ import (
 	"context"
 	"testing"
 
-	"go.viam.com/test"
-
 	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/components/movementsensor/gpsutils"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/resource"
 	rutils "go.viam.com/rdk/utils"
+	"go.viam.com/test"
 )
 
 func TestNewSerialMovementSensor(t *testing.T) {
@@ -57,7 +56,7 @@ func TestNewSerialMovementSensor(t *testing.T) {
 func TestCloseSerial(t *testing.T) {
 	logger := logging.NewTestLogger(t)
 	ctx := context.Background()
-	g := &NMEAMovementSensor{
+	g := &MovementSensor{
 		logger: logger,
 	}
 

@@ -3,9 +3,8 @@ package gpsutils
 import (
 	"testing"
 
-	"go.viam.com/test"
-
 	"go.viam.com/rdk/resource"
+	"go.viam.com/test"
 )
 
 func TestValidateSerial(t *testing.T) {
