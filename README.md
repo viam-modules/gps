@@ -1,6 +1,6 @@
 # [`gps` module](https://github.com/viam-modules/gps)
 
-This [gps module](https://app.viam.com/module/viam/gps) implements the gps [rtk-serial](#Configure-your-rtk-serial-movement_sensor), rtk-pmtk, nmea, and rtk-dual-gps movement sensors using the [`rdk:component:movement_sensor` API](https://docs.viam.com/appendix/apis/components/movement_sensor/).
+This [gps module](https://app.viam.com/module/viam/gps) implements the gps [rtk-serial](#Configure-your-rtk-serial-movement_sensor), [rtk-pmtk](#Configure-your-rtk-pmtk-movement_sensor), nmea, and rtk-dual-gps movement sensors using the [`rdk:component:movement_sensor` API](https://docs.viam.com/appendix/apis/components/movement_sensor/).
 
 A global positioning system (GPS) receives signals from satellites in the earth’s orbit to determine where it is and how fast it is going.
 
@@ -77,7 +77,73 @@ The `"serial_path"` filepath on a macOS system might resemble <file>"/dev/ttyUSB
 You will need to research the options available to you.
 If you are not sure where to start, check out this [GPS-RTK2 Hookup Guide from SparkFun](https://learn.sparkfun.com/tutorials/gps-rtk2-hookup-guide/connecting-the-zed-f9p-to-a-correction-source).
 
-### Next Steps
+## Configure your rtk-pmtk movement_sensor
+
+> [!NOTE]
+> Before configuring your movement_sensor, you must [create a machine](https://docs.viam.com/cloud/machines/#add-a-new-machine).
+
+Navigate to the [**CONFIGURE** tab](https://docs.viam.com/configure/) of your [machine](https://docs.viam.com/fleet/machines/) in the [Viam app](https://app.viam.com/).
+[Add movement_sensor / gps:MODEL to your machine](https://docs.viam.com/configure/#components).
+
+On the new component panel, copy and paste the following attribute template into your movement_sensor's attributes field:
+
+```json
+{
+  "i2c_addr": <int>,
+  "i2c_baud_rate": <int>,
+  "i2c_bus": "<index-of-bus-on-board>",
+  "ntrip_connect_attempts": <int>,
+  "ntrip_mountpoint": "<identifier>",
+  "ntrip_password": "<password for NTRIP server>",
+  "ntrip_url": "<URL of NTRIP server>",
+  "ntrip_username": "<username for NTRIP server>"
+}
+```
+
+### Attributes
+
+The following attributes are available for `viam:gps:rtk-pmtk` movement_sensors:
+
+| Attribute | Type | Required? | Description |
+| --------- | ---- | --------- | ----------  |
+| `i2c_addr`               | int    | **Required** | The device's I<sup>2</sup>C address. |
+| `i2c_bus`                | string | **Required** | The index of the I<sup>2</sup>C bus of the board wired to the sensor. |
+| `i2c_baud_rate`          | int    | Optional     | The rate at which data is sent from the sensor. Optional. <br> Default: `38400` |
+| `ntrip_url`              | string | **Required** | The URL of the NTRIP server from which you get correction data. Connects to a base station (maintained by a third party) for RTK corrections. |
+| `ntrip_username`         | string | Optional     | Username for the NTRIP server. |
+| `ntrip_password`         | string | Optional     | Password for the NTRIP server. |
+| `ntrip_connect_attempts` | int    | Optional     | How many times to attempt connection before timing out. <br> Default: `10` |
+| `ntrip_mountpoint`       | string | Optional     | If you know of an RTK mountpoint near you, write its identifier here. It will be appended to NTRIP address string (for example, "nysnet.gov/rtcm/**NJMTPT1**") and that mountpoint's data will be used for corrections. |
+
+## Example configuration
+
+### `viam:gps:rtk-pmtk`
+```json
+  {
+      "name": "<your-gps-rtk-pmtk-movement_sensor-name>",
+      "model": "viam:gps:rtk-pmtk",
+      "type": "movement_sensor",
+      "namespace": "rdk",
+      "attributes": {
+        "i2c_addr": 66,
+        "i2c_baud_rate": 115200,
+        "i2c_bus": "1",
+        "ntrip_connect_attempts": 12,
+        "ntrip_mountpoint": "MNTPT",
+        "ntrip_password": "pass",
+        "ntrip_url": "http://ntrip/url",
+        "ntrip_username": "usr"
+      },
+      "depends_on": []
+  }
+```
+
+> [!NOTE]
+> How you connect your device to an NTRIP server varies by geographic region.
+You will need to research the options available to you.
+If you are not sure where to start, check out this [GPS-RTK2 Hookup Guide from SparkFun](https://learn.sparkfun.com/tutorials/gps-rtk2-hookup-guide/connecting-the-zed-f9p-to-a-correction-source).
+
+## Next Steps
 - To test your movement_sensor, expand the **TEST** section of its configuration pane or go to the [**CONTROL** tab](https://docs.viam.com/fleet/control/).
 - To write code against your movement_sensor, use one of the [available SDKs](https://docs.viam.com/sdks/).
 - To view examples using a movement_sensor component, explore [these tutorials](https://docs.viam.com/tutorials/).
