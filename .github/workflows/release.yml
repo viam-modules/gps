@@ -31,6 +31,8 @@ jobs:
             label: arm64
 
     runs-on: ${{ matrix.arch }}
+    container:
+      image: ${{ matrix.image }}
 
     steps:
     - uses: actions/checkout@v3
@@ -40,15 +42,9 @@ jobs:
       with:
         go-version: 1.23
 
-    - name: Install canon
+    - name: Build module
       run: |
-        export PATH="$(go env GOPATH)/bin:$PATH"
-        go install github.com/viamrobotics/canon@v1.0.0
-
-    - name: Build and package
-      run: |
-        canon --profile gps
-        TARGET_OS=${{ matrix.platform }} TARGET_ARCH=${{ matrix.arch }} make module
+        sudo -u testbot bash -lc 'make module'
 
     - name: Upload gps module to registry
       uses: viamrobotics/upload-module@main
