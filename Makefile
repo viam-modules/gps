@@ -41,3 +41,6 @@ test-go: tool-install
 
 clean-all:
 	git clean -fxd
+
+license-check:
+	license_finder

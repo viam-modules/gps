@@ -1,0 +1,15 @@
+name: Pull Request Update
+
+concurrency:
+  group: pullrequest-${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request_target:
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  license_finder:
+    uses: ./.github/workflows/license_finder.yml

@@ -17,6 +17,7 @@ jobs:
     uses: ./.github/workflows/test.yml
 
   publish:
+    needs: test
     strategy:
       matrix:
         include:

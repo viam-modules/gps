@@ -50,6 +50,10 @@ jobs:
             exit 1
         fi
 
+    - name: Run go unit tests
+      run: |
+        sudo -u testbot bash -lc 'make test'
+
     - name: make build
       run: |
         sudo -u testbot bash -lc 'make build'
