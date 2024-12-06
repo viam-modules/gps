@@ -17,8 +17,8 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/viam-modules/gps/gpsutils"
 	"go.viam.com/rdk/components/movementsensor"
-	"go.viam.com/rdk/components/movementsensor/gpsutils"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/resource"
 )

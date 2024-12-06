@@ -6,9 +6,9 @@ package nmea
 import (
 	"context"
 
+	"github.com/viam-modules/gps/gpsutils"
 	"go.viam.com/rdk/components/board/genericlinux/buses"
 	"go.viam.com/rdk/components/movementsensor"
-	"go.viam.com/rdk/components/movementsensor/gpsutils"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/resource"
 )
