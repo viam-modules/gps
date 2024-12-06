@@ -2,7 +2,7 @@ module github.com/viam-modules/gps
 
 go 1.23.0
 
-replace go.viam.com/rdk => ../rdk
+replace go.viam.com/rdk => github.com/abe-winter/rdk v0.0.0-20241206202909-64e07a95d598
 
 require (
 	github.com/AlekSi/gocov-xml v1.0.0
