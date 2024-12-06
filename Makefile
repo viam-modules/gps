@@ -9,13 +9,13 @@ endif
 
 module: build
 	rm -f $(BIN_OUTPUT_PATH)/module.tar.gz
-	tar czf $(BIN_OUTPUT_PATH)/module.tar.gz $(BIN_OUTPUT_PATH)/gps meta.json
+	tar czf $(BIN_OUTPUT_PATH)/module.tar.gz $(BIN_OUTPUT_PATH)/gps.exe meta.json
 
 build: build-go
 
 build-go:
 	rm -f $(BIN_OUTPUT_PATH)/gps
-	go build -tags no_cgo,osusergo,netgo -ldflags="-extldflags=-static $(COMMON_LDFLAGS)"  -o $(BIN_OUTPUT_PATH)/gps main.go
+	go build -tags no_cgo,osusergo,netgo -ldflags="-extldflags=-static $(COMMON_LDFLAGS)" -o $(BIN_OUTPUT_PATH)/gps.exe main.go
 
 tool-install:
 	GOBIN=`pwd`/$(TOOL_BIN) go install \
