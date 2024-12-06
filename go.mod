@@ -1,4 +1,4 @@
-module gps
+module github.com/viam-modules/gps
 
 go 1.23.0
 

@@ -4,9 +4,9 @@ package main
 import (
 	"context"
 
-	"gps/nmea"
-	"gps/rtk"
-	dualgps "gps/rtk-dual-gps"
+	"github.com/viam-modules/gps/nmea"
+	"github.com/viam-modules/gps/rtk"
+	dualgps "github.com/viam-modules/gps/rtk-dual-gps"
 
 	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/logging"
