@@ -15,7 +15,15 @@ build: build-go
 
 build-go:
 	rm -f $(BIN_OUTPUT_PATH)/gps
-	go build -tags no_cgo,osusergo,netgo -ldflags="-extldflags=-static $(COMMON_LDFLAGS)"  -o $(BIN_OUTPUT_PATH)/gps main.go
+	go build -tags no_cgo,osusergo,netgo -ldflags="-extldflags=-static $(COMMON_LDFLAGS)" -o $(BIN_OUTPUT_PATH) main.go
+
+build-win:
+	mkdir -p bin
+	GOOS=windows GOARCH=amd64 go build -tags no_cgo,osusergo,netgo -ldflags="-extldflags=-static $(COMMON_LDFLAGS)" -o bin/gps.exe .
+	cat meta.json | jq '.entrypoint |= "bin/gps.exe"' > meta-win.json
+	mv meta.json meta.backup.json
+	mv meta-win.json meta.json
+	tar czf bin/module.tar.gz bin/gps.exe meta.json
 
 tool-install:
 	GOBIN=`pwd`/$(TOOL_BIN) go install \
