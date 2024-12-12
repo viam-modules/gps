@@ -7,7 +7,6 @@ import (
 	"github.com/viam-modules/gps/nmea"
 	"github.com/viam-modules/gps/rtk"
 	dualgps "github.com/viam-modules/gps/rtk-dual-gps"
-
 	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/module"
@@ -28,9 +27,9 @@ func mainWithArgs(ctx context.Context, args []string, logger logging.Logger) err
 		return err
 	}
 
-	if err = module.AddModelFromRegistry(ctx, movementsensor.API, rtk.ModelPmtk); err != nil {
+	/* if err = module.AddModelFromRegistry(ctx, movementsensor.API, rtk.ModelPmtk); err != nil {
 		return err
-	}
+	} */
 
 	if err = module.AddModelFromRegistry(ctx, movementsensor.API, nmea.Model); err != nil {
 		return err

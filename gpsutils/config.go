@@ -35,6 +35,7 @@ func (cfg *I2CConfig) Validate(path string) error {
 
 // Validate ensures all parts of the config are valid.
 func (cfg *SerialConfig) Validate(path string) error {
+	// todo: don't panic when serial_path is top level (presumably cfg is nil)
 	if cfg.SerialPath == "" {
 		return resource.NewConfigValidationFieldRequiredError(path, "serial_path")
 	}
