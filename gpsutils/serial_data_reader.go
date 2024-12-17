@@ -82,7 +82,7 @@ func (dr *SerialDataReader) backgroundWorker(cancelCtx context.Context) {
 		line, err := r.ReadString('\n')
 		if err != nil {
 			if readErrCount < 5 {
-				dr.logger.CDebug(cancelCtx, "can't read gps serial %s", err)
+				dr.logger.CDebugf(cancelCtx, "can't read gps serial %s", err)
 			}
 			readErrCount++
 			continue // The line has bogus data; don't put it in the channel.
