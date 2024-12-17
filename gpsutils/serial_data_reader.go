@@ -67,6 +67,7 @@ func NewSerialDataReader(
 
 func (dr *SerialDataReader) backgroundWorker(cancelCtx context.Context) {
 	defer close(dr.data)
+	readErrCount := 0
 
 	r := bufio.NewReader(dr.dev)
 	for {
@@ -80,7 +81,10 @@ func (dr *SerialDataReader) backgroundWorker(cancelCtx context.Context) {
 
 		line, err := r.ReadString('\n')
 		if err != nil {
-			dr.logger.CErrorf(cancelCtx, "can't read gps serial %s", err)
+			if readErrCount < 5 {
+				dr.logger.CDebug(cancelCtx, "can't read gps serial %s", err)
+			}
+			readErrCount++
 			continue // The line has bogus data; don't put it in the channel.
 		}
 
