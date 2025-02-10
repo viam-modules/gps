@@ -7,19 +7,27 @@
   "models": [
     {
       "api": "rdk:component:movement_sensor",
-      "model": "viam:gps:rtk-serial"
+      "model": "viam:gps:rtk-serial",
+      "markdown_link": "README.md#configure-your-rtk-serial-movement_sensor",
+      "short_description": "movement sensor model for gps rtk using a serial connection."
     },
     {
       "api": "rdk:component:movement_sensor",
-      "model": "viam:gps:rtk-pmtk"
+      "model": "viam:gps:rtk-pmtk",
+      "markdown_link": "README.md#configure-your-rtk-pmtk-movement_sensor",
+      "short_description": "movement sensor model for gps rtk using a serial connection."
     },
     {
       "api": "rdk:component:movement_sensor",
-      "model": "viam:gps:nmea"
+      "model": "viam:gps:nmea",
+      "markdown_link": "README.md#configure-your-nmea-movement_sensor",
+      "short_description": "movement sensor model for basic gps capabilities."
     },
     {
       "api": "rdk:component:movement_sensor",
-      "model": "viam:gps:rtk-dual-gps"
+      "model": "viam:gps:rtk-dual-gps",
+      "markdown_link": "README.md#configure-your-rtk-dual-gps-movement_sensor",
+      "short_description": "movement sensor model for a dual gps rtk setup."
     }
   ],
   "build": {
