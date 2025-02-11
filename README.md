@@ -33,18 +33,23 @@ On the new component panel, copy and paste the following attribute template into
 }
 ```
 
+To find your serial device path, first connect the serial device to your machine:
+
+- On Linux, run `ls /dev/serial/by-path/` to show connected serial devices, or look for your device in the output of `sudo dmesg | grep tty`. Example: `"/dev/serial/by-path/usb-0:1.1:1.0"`.
+- On macOS, run `ls /dev/tty* | grep -i usb` to show connected USB serial devices, `ls /dev/tty*` to browse all devices, or look for your device in the output of `sudo dmesg | grep tty`. Example: `"/dev/ttyS0"`.
+
 ### Attributes
 
 The following attributes are available for `viam:gps:rtk-serial` movement_sensors:
 
 | Attribute | Type | Required? | Description |
 | --------- | ---- | --------- | ----------  |
-| `serial_path`            | string | **Required** | The full filesystem path to the serial device, starting with <file>/dev/</file>. To find your serial device path, first connect the serial device to your machine, then:<ul><li>On Linux, run <code>ls /dev/serial/by-path/\*</code> to show connected serial devices, or look for your device in the output of <code>sudo dmesg \| grep tty</code>. Example: <code>"/dev/serial/by-path/usb-0:1.1:1.0"</code>.</li><li>On macOS, run <code>ls /dev/tty\* \| grep -i usb</code> to show connected USB serial devices, <code>ls /dev/tty\*</code> to browse all devices, or look for your device in the output of <code>sudo dmesg \| grep tty</code>. Example: <code>"/dev/ttyS0"</code>.</li></ul> |
-| `serial_baud_rate`       | int    | Optional     | The rate at which data is sent from the sensor. <br> Default: `38400` |
+| `serial_path`            | string | **Required** | The full filesystem path to the serial device, starting with `/dev/`. Example: `"/dev/ttyS0"` |
+| `serial_baud_rate`       | int    | Optional     | The rate at which data is sent from the sensor. Default: `38400` |
 | `ntrip_url`              | string | **Required** | The URL of the NTRIP server from which you get correction data. Connects to a base station (maintained by a third party) for RTK corrections. |
 | `ntrip_username`         | string | Optional     | Username for the NTRIP server. |
 | `ntrip_password`         | string | Optional     | Password for the NTRIP server. |
-| `ntrip_connect_attempts` | int    | Optional     | How many times to attempt connection before timing out. <br> Default: `10` |
+| `ntrip_connect_attempts` | int    | Optional     | How many times to attempt connection before timing out.  Default: `10` |
 | `ntrip_mountpoint`       | string | Optional     | If you know of an RTK mountpoint near you, write its identifier here. It will be appended to NTRIP address string (for example, "nysnet.gov/rtcm/**NJMTPT1**") and that mountpoint's data will be used for corrections. |
 
 ### Example Configuration
@@ -62,7 +67,7 @@ The following attributes are available for `viam:gps:rtk-serial` movement_sensor
 ```
 
 The `"serial_path"` filepath used in this example is specific to serial devices connected to Linux systems.
-The `"serial_path"` filepath on a macOS system might resemble <file>"/dev/ttyUSB0"</file> or <file>"/dev/ttyS0"</file>.
+The `"serial_path"` filepath on a macOS system might resemble `"/dev/ttyUSB0"` or `"/dev/ttyS0"`.
 
 > [!NOTE]
 > How you connect your device to an NTRIP server varies by geographic region.
@@ -92,13 +97,13 @@ The following attributes are available for `viam:gps:rtk-pmtk` movement_sensors:
 
 | Attribute | Type | Required? | Description |
 | --------- | ---- | --------- | ----------  |
-| `i2c_addr`               | int    | **Required** | The device's I<sup>2</sup>C address. |
-| `i2c_bus`                | string | **Required** | The index of the I<sup>2</sup>C bus of the board wired to the sensor. |
-| `i2c_baud_rate`          | int    | Optional     | The rate at which data is sent from the sensor. Optional. <br> Default: `38400` |
+| `i2c_addr`               | int    | **Required** | The device's I2C address. |
+| `i2c_bus`                | string | **Required** | The index of the I2C bus of the board wired to the sensor. |
+| `i2c_baud_rate`          | int    | Optional     | The rate at which data is sent from the sensor. Optional.  Default: `38400` |
 | `ntrip_url`              | string | **Required** | The URL of the NTRIP server from which you get correction data. Connects to a base station (maintained by a third party) for RTK corrections. |
 | `ntrip_username`         | string | Optional     | Username for the NTRIP server. |
 | `ntrip_password`         | string | Optional     | Password for the NTRIP server. |
-| `ntrip_connect_attempts` | int    | Optional     | How many times to attempt connection before timing out. <br> Default: `10` |
+| `ntrip_connect_attempts` | int    | Optional     | How many times to attempt connection before timing out.  Default: `10` |
 | `ntrip_mountpoint`       | string | Optional     | If you know of an RTK mountpoint near you, write its identifier here. It will be appended to NTRIP address string (for example, "nysnet.gov/rtcm/**NJMTPT1**") and that mountpoint's data will be used for corrections. |
 
 ### Example Configuration
@@ -126,7 +131,7 @@ If you are not sure where to start, check out this [GPS-RTK2 Hookup Guide from S
 The `gps-nmea` movement sensor model supports [NMEA-based](https://en.wikipedia.org/wiki/NMEA_0183) GPS units and RTCM versions up to 3.3.
 
 This GPS model uses communication standards set by the National Marine Electronics Association (NMEA).
-The `gps-nmea` model can be connected using USB and send data through a serial connection to any device, or employ an I<sup>2</sup>C connection to a board.
+The `gps-nmea` model can be connected using USB and send data through a serial connection to any device, or employ an I2C connection to a board.
 
 On the new component panel, copy and paste the following attribute template into your movement_sensor's attributes field:
 
@@ -156,7 +161,7 @@ The following attributes are available for `viam:gps:nmea` movement_sensors:
 ### Connection attributes
 
 You need to configure attributes to specify how the GPS connects to your computer.
-You can use either serial communication (over USB) or I<sup>2</sup>C communication (through pins to a [board](https://docs.viam.com/components/board/)).
+You can use either serial communication (over USB) or I2C communication (through pins to a [board](https://docs.viam.com/components/board/)).
 
 Use `connection_type` to specify `"serial"` or `"I2C"` connection in the main `attributes` config.
 Then create a struct within `attributes` for either `serial_attributes` or `i2c_attributes`, respectively.
@@ -243,6 +248,7 @@ The following attributes are available for `viam:gps:rtk-dual-gps` movement_sens
 ```
 
 ## Next Steps
+
 - To test your movement_sensor, expand the **TEST** section of its configuration pane or go to the [**CONTROL** tab](https://docs.viam.com/fleet/control/).
 - To write code against your movement_sensor, use one of the [available SDKs](https://docs.viam.com/sdks/).
 - To view examples using a movement_sensor component, explore [these tutorials](https://docs.viam.com/tutorials/).
