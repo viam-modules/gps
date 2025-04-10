@@ -9,7 +9,7 @@ The `rtk-serial` and [`rtk-pmtk`](https://docs.viam.com/components/movement-sens
 The chip requires a correction source to get to the required positional accuracy.
 The `rtk-serial` model uses an over-the-internet correction source like an RTK reference station and sends the data over a serial connection to the [board](https://docs.viam.com/components/board/).
 
-Follow the guide to [Set up a SparkFun RTK Reference Station](https:docs.viam.com/components/movement-sensor/set-up-base-station/) to configure a SparkFun station for use with this RTK-enabled GPS movement sensor model.
+Follow the guide to [Set up a SparkFun RTK Reference Station](https://docs.viam.com/components/movement-sensor/set-up-base-station/) to configure a SparkFun station for use with this RTK-enabled GPS movement sensor model.
 
 > [!NOTE]
 > Before configuring your movement_sensor, you must [create a machine](https://docs.viam.com/cloud/machines/#add-a-new-machine).
