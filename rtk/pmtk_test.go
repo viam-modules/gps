@@ -24,14 +24,14 @@ func TestValidatePMTKRTK(t *testing.T) {
 	}
 	t.Run("valid config", func(t *testing.T) {
 		cfg := validConfig
-		_, err := cfg.Validate(path)
+		_, _, err := cfg.Validate(path)
 		test.That(t, err, test.ShouldBeNil)
 	})
 
 	t.Run("missing bus", func(t *testing.T) {
 		cfg := validConfig
 		cfg.I2CBus = ""
-		_, err := cfg.Validate(path)
+		_, _, err := cfg.Validate(path)
 		test.That(t, err, test.ShouldBeError,
 			resource.NewConfigValidationFieldRequiredError(path, "i2c_bus"))
 	})
@@ -39,7 +39,7 @@ func TestValidatePMTKRTK(t *testing.T) {
 	t.Run("missing address", func(t *testing.T) {
 		cfg := validConfig
 		cfg.I2CAddr = 0
-		_, err := cfg.Validate(path)
+		_, _, err := cfg.Validate(path)
 		test.That(t, err, test.ShouldBeError,
 			resource.NewConfigValidationFieldRequiredError(path, "i2c_addr"))
 	})
@@ -47,7 +47,7 @@ func TestValidatePMTKRTK(t *testing.T) {
 	t.Run("missing url", func(t *testing.T) {
 		cfg := validConfig
 		cfg.NtripURL = ""
-		_, err := cfg.Validate(path)
+		_, _, err := cfg.Validate(path)
 		test.That(t, err, test.ShouldBeError,
 			resource.NewConfigValidationFieldRequiredError(path, "ntrip_url"))
 	})

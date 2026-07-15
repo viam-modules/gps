@@ -36,7 +36,7 @@ func TestValidateSerialRTK(t *testing.T) {
 			SerialPath:           path,
 			SerialBaudRate:       115200,
 		}
-		_, err := cfg.Validate(path)
+		_, _, err := cfg.Validate(path)
 		test.That(t, err, test.ShouldBeNil)
 	})
 
@@ -51,7 +51,7 @@ func TestValidateSerialRTK(t *testing.T) {
 			SerialBaudRate:       115200,
 		}
 
-		_, err := cfg.Validate(path)
+		_, _, err := cfg.Validate(path)
 		test.That(t, err, test.ShouldBeError,
 			resource.NewConfigValidationFieldRequiredError(path, "ntrip_url"))
 	})
@@ -67,7 +67,7 @@ func TestValidateSerialRTK(t *testing.T) {
 			SerialBaudRate:       115200,
 		}
 
-		_, err := cfg.Validate(path)
+		_, _, err := cfg.Validate(path)
 		test.That(t, err, test.ShouldBeError,
 			resource.NewConfigValidationFieldRequiredError(path, "serial_path"))
 	})
