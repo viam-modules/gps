@@ -51,25 +51,25 @@ type Config struct {
 
 // Validate validates the dual gps model's config to
 // make sure that it has two gps movement sensors.
-func (c *Config) Validate(path string) ([]string, error) {
+func (c *Config) Validate(path string) ([]string, []string, error) {
 	var deps []string
 
 	if c.Gps1 == "" {
-		return nil, resource.NewConfigValidationFieldRequiredError(path, "first_gps")
+		return nil, nil, resource.NewConfigValidationFieldRequiredError(path, "first_gps")
 	}
 	deps = append(deps, c.Gps1)
 
 	if c.Gps2 == "" {
-		return nil, resource.NewConfigValidationFieldRequiredError(path, "second_gps")
+		return nil, nil, resource.NewConfigValidationFieldRequiredError(path, "second_gps")
 	}
 	deps = append(deps, c.Gps2)
 
 	if c.Offset != nil && (*c.Offset < 0 || *c.Offset > 360) {
-		return nil, resource.NewConfigValidationError(
+		return nil, nil, resource.NewConfigValidationError(
 			path,
 			errors.New("this driver only allows offset values from 0 to 360"))
 	}
-	return deps, nil
+	return deps, nil, nil
 }
 
 func init() {
