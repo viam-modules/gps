@@ -223,3 +223,41 @@
     :why:
     :versions: []
     :when: 2024-12-03 20:21:04.946556000 Z
+- - :permit
+  - Mozilla Public License 2.0
+  - :who:
+    :why: weak copyleft already accepted by the RDK for transitive HashiCorp dependencies
+    :versions: []
+    :when: 2026-11-04 15:45:00.000000000 Z
+- - :license
+  - codeberg.org/go-fonts/liberation
+  - New BSD
+  - :who:
+    :why: module moved from github.com/go-fonts/liberation; same 3-clause BSD license
+    :license_links: https://codeberg.org/go-fonts/liberation/src/tag/v0.5.0/LICENSE
+    :versions: []
+    :when: 2026-11-04 15:45:00.000000000 Z
+- - :license
+  - codeberg.org/go-latex/latex
+  - New BSD
+  - :who:
+    :why: module moved from github.com/go-latex/latex; same 3-clause BSD license
+    :license_links: https://codeberg.org/go-latex/latex/src/tag/v0.1.0/LICENSE
+    :versions: []
+    :when: 2026-11-04 15:45:00.000000000 Z
+- - :license
+  - github.com/hashicorp/go-getter
+  - Mozilla Public License 2.0
+  - :who:
+    :why: license finder does not detect the MPL 2.0 license file automatically
+    :license_links: https://github.com/hashicorp/go-getter/blob/v1.8.6/LICENSE
+    :versions: []
+    :when: 2026-11-04 15:45:00.000000000 Z
+- - :license
+  - github.com/hashicorp/go-version
+  - Mozilla Public License 2.0
+  - :who:
+    :why: license finder does not detect the MPL 2.0 license file automatically
+    :license_links: https://github.com/hashicorp/go-version/blob/v1.8.0/LICENSE
+    :versions: []
+    :when: 2026-11-04 15:45:00.000000000 Z

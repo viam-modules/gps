@@ -35,12 +35,12 @@ jobs:
       image: ${{ matrix.image }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
 
     - name: Set up Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v6
       with:
-        go-version: 1.23
+        go-version-file: go.mod
 
     - name: Build module
       run: |

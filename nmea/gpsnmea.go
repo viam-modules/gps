@@ -39,18 +39,18 @@ type Config struct {
 }
 
 // Validate ensures all parts of the config are valid.
-func (cfg *Config) Validate(path string) ([]string, error) {
+func (cfg *Config) Validate(path string) ([]string, []string, error) {
 	if cfg.ConnectionType == "" {
-		return nil, resource.NewConfigValidationFieldRequiredError(path, "connection_type")
+		return nil, nil, resource.NewConfigValidationFieldRequiredError(path, "connection_type")
 	}
 
 	switch strings.ToLower(cfg.ConnectionType) {
 	case i2cStr:
-		return nil, cfg.I2CConfig.Validate(path)
+		return nil, nil, cfg.I2CConfig.Validate(path)
 	case serialStr:
-		return nil, cfg.SerialConfig.Validate(path)
+		return nil, nil, cfg.SerialConfig.Validate(path)
 	default:
-		return nil, connectionTypeError(cfg.ConnectionType, serialStr, i2cStr)
+		return nil, nil, connectionTypeError(cfg.ConnectionType, serialStr, i2cStr)
 	}
 }
 

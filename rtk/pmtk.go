@@ -32,18 +32,18 @@ type I2CConfig struct {
 }
 
 // Validate ensures all parts of the config are valid.
-func (cfg *I2CConfig) Validate(path string) ([]string, error) {
+func (cfg *I2CConfig) Validate(path string) ([]string, []string, error) {
 	err := cfg.validateI2C(path)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	err = cfg.validateNtrip(path)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return []string{}, nil
+	return []string{}, nil, nil
 }
 
 // validateI2C ensures all parts of the config are valid.

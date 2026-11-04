@@ -1,7 +1,7 @@
 service:
   golangci-lint-version: 1.61.x
 run:
-  deadline: 900s
+  timeout: 900s
   modules-download-mode: readonly
   skip-dirs-use-default: false
   tests: true
@@ -108,6 +108,11 @@ linters-settings:
       - name: unreachable-code
       - name: var-declaration
       - name: var-naming
+  gomoddirectives:
+    # These pins keep golangci-lint v1.62.0's imports resolvable after the RDK bump.
+    replace-allow-list:
+      - github.com/nunnatsa/ginkgolinter
+      - github.com/golangci/gofmt
   lll:
     line-length: 140
 issues:
