@@ -7,7 +7,6 @@ import (
 	"github.com/viam-modules/gps/nmea"
 	"github.com/viam-modules/gps/rtk"
 	dualgps "github.com/viam-modules/gps/rtk-dual-gps"
-
 	"go.viam.com/rdk/components/movementsensor"
 	"go.viam.com/rdk/logging"
 	"go.viam.com/rdk/module"
