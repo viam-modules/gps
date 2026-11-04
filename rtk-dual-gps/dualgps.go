@@ -112,7 +112,7 @@ func (dg *dualGPS) Reconfigure(ctx context.Context, deps resource.Dependencies, 
 	dg.mu.Lock()
 	defer dg.mu.Unlock()
 
-	first, err := movementsensor.FromDependencies(deps, newConf.Gps1)
+	first, err := movementsensor.FromProvider(deps, newConf.Gps1)
 	if err != nil {
 		return err
 	}
@@ -123,7 +123,7 @@ func (dg *dualGPS) Reconfigure(ctx context.Context, deps resource.Dependencies, 
 	}
 	dg.gps1 = first
 
-	second, err := movementsensor.FromDependencies(deps, newConf.Gps2)
+	second, err := movementsensor.FromProvider(deps, newConf.Gps2)
 	if err != nil {
 		return err
 	}

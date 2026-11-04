@@ -43,7 +43,7 @@ func TestCreateValidateAndReconfigure(t *testing.T) {
 			Gps1: testGPS1,
 		},
 	}
-	implicits, err := cfg.Validate(testPath, movementsensor.API.SubtypeName)
+	implicits, _, err := cfg.Validate(testPath, movementsensor.API.SubtypeName)
 	test.That(t, implicits, test.ShouldBeNil)
 	test.That(t, err, test.ShouldBeError, resource.NewConfigValidationFieldRequiredError(testPath, "second_gps"))
 
@@ -56,7 +56,7 @@ func TestCreateValidateAndReconfigure(t *testing.T) {
 			Gps2: testGPS2,
 		},
 	}
-	implicits, err = cfg.Validate(testPath, movementsensor.API.SubtypeName)
+	implicits, _, err = cfg.Validate(testPath, movementsensor.API.SubtypeName)
 	test.That(t, implicits, test.ShouldResemble, []string{testGPS1, testGPS2})
 	test.That(t, err, test.ShouldBeNil)
 
@@ -95,7 +95,7 @@ func TestCreateValidateAndReconfigure(t *testing.T) {
 			Gps2: testGPS3,
 		},
 	}
-	err = ms.Reconfigure(context.Background(), deps, cfg)
+	err = dgps.Reconfigure(context.Background(), deps, cfg)
 	test.That(t, err, test.ShouldBeNil)
 	dgps, ok = ms.(*dualGPS)
 	test.That(t, ok, test.ShouldBeTrue)
@@ -119,7 +119,7 @@ func TestCreateValidateAndReconfigure(t *testing.T) {
 			Gps2: testGPS3,
 		},
 	}
-	err = ms.Reconfigure(context.Background(), deps, cfg)
+	err = dgps.Reconfigure(context.Background(), deps, cfg)
 	test.That(t, err, test.ShouldBeNil)
 	dgps, ok = ms.(*dualGPS)
 	test.That(t, ok, test.ShouldBeTrue)
