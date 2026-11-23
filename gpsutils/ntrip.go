@@ -78,7 +78,7 @@ func (n *NtripInfo) ParseSourcetable(logger logging.Logger) (*Sourcetable, error
 	}
 	defer func() {
 		if err := reader.Close(); err != nil {
-			logger.Errorf("Error closing reader:", err)
+			logger.Errorf("Error closing reader: %v", err)
 		}
 	}()
 

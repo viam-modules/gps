@@ -141,7 +141,7 @@ func (g *gpsrtk) receiveAndWriteCorrectionData(cancelCtx context.Context) {
 
 	err := g.connectAndParseSourceTable(cancelCtx)
 	if err != nil {
-		g.logger.Errorf("unable to parse source table! Aborting: %w", err)
+		g.logger.Errorf("unable to parse source table! Aborting: %v", err)
 		return
 	}
 
@@ -149,7 +149,7 @@ func (g *gpsrtk) receiveAndWriteCorrectionData(cancelCtx context.Context) {
 	for !g.isClosed && cancelCtx.Err() == nil {
 		scanner, err := g.getStream(cancelCtx)
 		if err != nil {
-			g.logger.Errorf("unable to get NTRIP stream! Aborting: %w", err)
+			g.logger.Errorf("unable to get NTRIP stream! Aborting: %v", err)
 			return
 		}
 
